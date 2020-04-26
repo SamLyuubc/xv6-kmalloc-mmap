@@ -7,10 +7,12 @@ OBJS = \
 	ide.o\
 	ioapic.o\
 	kalloc.o\
+	kmalloc.o\
 	kbd.o\
 	lapic.o\
 	log.o\
 	main.o\
+	mmap.o\
 	mp.o\
 	picirq.o\
 	pipe.o\
@@ -182,6 +184,15 @@ UPROGS=\
 	_wc\
 	_zombie\
 
+TPROGS=\
+	_test_1\
+	_test_2\
+	_test_3\
+	_test_4\
+	_test_5\
+	_test_6\
+	_test_7\
+
 fs.img: mkfs README sample.txt $(UPROGS)
 	./mkfs fs.img README sample.txt $(UPROGS)
 
@@ -192,7 +203,8 @@ clean:
 	*.o *.d *.asm *.sym vectors.S bootblock entryother \
 	initcode initcode.out kernel xv6.img fs.img kernelmemfs \
 	xv6memfs.img mkfs .gdbinit \
-	$(UPROGS)
+	$(UPROGS)\
+	$(TPROGS)
 
 # make a printout
 FILES = $(shell grep -v '^\#' runoff.list)
@@ -249,6 +261,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 
 EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
+	kmalloc.c mmap.c\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	printf.c umalloc.c\
 	README sample.txt dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
